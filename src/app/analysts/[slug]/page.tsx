@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { AnalystProfile } from "@/components/analyst-profile";
 import { demoAnalysts, getAnalystBySlug } from "@/modules/demo";
+import { createLocalizedMetadata, getRequestLocale } from "@/modules/i18n/server";
 
 export const dynamicParams = false;
 
@@ -13,7 +14,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { readonly params: Promise<{ slug: string }> }): Promise<Metadata> {
   const analyst = getAnalystBySlug((await params).slug);
   return analyst
-    ? { title: `${analyst.name} | Mergen Alpha`, description: analyst.role }
+    ? createLocalizedMetadata(await getRequestLocale(), {
+        canonicalPath: `/analysts/${analyst.slug}`,
+        authoredTitle: analyst.name,
+        authoredDescription: analyst.role,
+      })
     : { title: "Analyst not found | Mergen Alpha" };
 }
 

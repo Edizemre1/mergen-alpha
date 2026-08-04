@@ -61,6 +61,29 @@ describe("public boundary validator", () => {
     expect(validatePublicBoundary(root).map((item) => item.rule)).toContain("remote-asset-or-url");
   });
 
+  it("allows only the approved canonical origin in the metadata helper", () => {
+    const root = fixture();
+    put(
+      root,
+      "src/modules/i18n/metadata.ts",
+      'export const metadataBase = new URL("https://alpha.mergen.finance");',
+    );
+    expect(validatePublicBoundary(root)).toEqual([]);
+  });
+
+  it("continues rejecting other URLs beside the approved canonical origin", () => {
+    const root = fixture();
+    put(
+      root,
+      "src/modules/i18n/metadata.ts",
+      [
+        'export const metadataBase = new URL("https://alpha.mergen.finance");',
+        'export const remoteImage = "https://cdn.invalid/image.png";',
+      ].join("\n"),
+    );
+    expect(validatePublicBoundary(root).map((item) => item.rule)).toContain("remote-asset-or-url");
+  });
+
   it("rejects wallet transaction code", () => {
     const root = fixture();
     const operation = ["write", "Contract"].join("");

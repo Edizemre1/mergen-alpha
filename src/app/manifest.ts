@@ -11,6 +11,7 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
     short_name: dictionary["metadata.manifestShortName"],
     description: dictionary["metadata.description"],
     start_url: "/",
+    scope: "/",
     display: "standalone",
     background_color: "#090c10",
     theme_color: "#090c10",

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { ResearchDetail } from "@/components/research-detail";
 import { demoResearchCards, getAnalystById, getResearchBySlug } from "@/modules/demo";
+import { createLocalizedMetadata, getRequestLocale } from "@/modules/i18n/server";
 
 export const dynamicParams = false;
 
@@ -13,7 +14,11 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { readonly params: Promise<{ slug: string }> }): Promise<Metadata> {
   const research = getResearchBySlug((await params).slug);
   return research
-    ? { title: `${research.title} | Mergen Alpha`, description: research.thesisSummary }
+    ? createLocalizedMetadata(await getRequestLocale(), {
+        canonicalPath: `/research/${research.slug}`,
+        authoredTitle: research.title,
+        authoredDescription: research.thesisSummary,
+      })
     : { title: "Research not found | Mergen Alpha" };
 }
 

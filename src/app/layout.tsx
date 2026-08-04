@@ -15,7 +15,7 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  return createLocalizedMetadata(await getRequestLocale());
+  return createLocalizedMetadata(await getRequestLocale(), { canonicalPath: "/" });
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

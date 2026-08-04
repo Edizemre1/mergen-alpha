@@ -4,7 +4,11 @@ import { LegalPage } from "@/components/legal-page";
 import { createLocalizedMetadata, getDictionary, getRequestLocale } from "@/modules/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return createLocalizedMetadata(await getRequestLocale(), "terms.title", "terms.fictionBody");
+  return createLocalizedMetadata(await getRequestLocale(), {
+    canonicalPath: "/terms",
+    titleKey: "terms.title",
+    descriptionKey: "terms.fictionBody",
+  });
 }
 
 export default async function TermsPage() {

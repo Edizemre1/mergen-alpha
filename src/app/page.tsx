@@ -4,7 +4,11 @@ import { HomeFeed } from "@/components/home-feed";
 import { createLocalizedMetadata, getRequestLocale } from "@/modules/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return createLocalizedMetadata(await getRequestLocale(), "nav.home", "home.description");
+  return createLocalizedMetadata(await getRequestLocale(), {
+    canonicalPath: "/",
+    titleKey: "nav.home",
+    descriptionKey: "home.description",
+  });
 }
 
 export default function HomePage() {

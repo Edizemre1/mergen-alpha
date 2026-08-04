@@ -4,7 +4,11 @@ import { LegalPage } from "@/components/legal-page";
 import { createLocalizedMetadata, getDictionary, getRequestLocale } from "@/modules/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return createLocalizedMetadata(await getRequestLocale(), "privacy.title", "privacy.intro");
+  return createLocalizedMetadata(await getRequestLocale(), {
+    canonicalPath: "/privacy",
+    titleKey: "privacy.title",
+    descriptionKey: "privacy.intro",
+  });
 }
 
 export default async function PrivacyPage() {

@@ -17,7 +17,7 @@ The production backend and core product are private and are not synchronized int
 Use Node.js `22.21.1` with Unicode `16.0` and ICU `77.1`.
 
 ```powershell
-npm install
+npm ci
 npm run lint
 npm run typecheck
 npm run test:focused
@@ -29,5 +29,20 @@ npm audit --omit=dev
 ```
 
 No environment file, external service, Docker runtime, or PostgreSQL instance is required.
+
+## Production Runtime
+
+The canonical public URL is `https://alpha.mergen.finance`. A production build emits
+Next.js standalone output, but the release artifact must be assembled from all three
+required payloads:
+
+- `.next/standalone/`
+- `public/`
+- `.next/static/`
+
+The deployable artifact must be built and validated in an approved Linux x86_64
+environment. Windows builds are validation-only and must not be deployed to Linux.
+The production VPS receives the prebuilt immutable artifact; it does not require Git,
+build tooling, a database, an application environment file, or application secrets.
 
 See [Public Boundary](docs/PUBLIC_BOUNDARY.md), [Localization](docs/LOCALIZATION.md), [Demo Data](docs/DEMO_DATA.md), and [Ported Assets](docs/PORTED_ASSETS.md).

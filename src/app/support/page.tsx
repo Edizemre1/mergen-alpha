@@ -4,7 +4,11 @@ import { LegalPage } from "@/components/legal-page";
 import { createLocalizedMetadata, getDictionary, getRequestLocale } from "@/modules/i18n/server";
 
 export async function generateMetadata(): Promise<Metadata> {
-  return createLocalizedMetadata(await getRequestLocale(), "support.title", "support.description");
+  return createLocalizedMetadata(await getRequestLocale(), {
+    canonicalPath: "/support",
+    titleKey: "support.title",
+    descriptionKey: "support.description",
+  });
 }
 
 export default async function SupportPage() {
